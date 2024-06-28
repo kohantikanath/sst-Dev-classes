@@ -40,31 +40,40 @@ function Products() {
   // let products = [];
 
   let [products, setProducts] = useState([]);
-  console.log("products")
+  let [cate, setCate] = useState(0);
+  console.log("products");
   console.log(useWindowSize());
   useEffect(() => {
-    fetch("https://run.mocky.io/v3/1c9a787b-3e6b-4fc2-9460-f908e2e3cc29").then(
-      (response) => {
+    fetch("https://run.mocky.io/v3/1c9a787b-3e6b-4fc2-9460-f908e2e3cc29")
+      .then((response) => {
         return response.json();
-      }
-    ).then((res) => {
-      console.log(res);
-      setProducts(res);
-    })
-  }, [])
+      })
+      .then((res) => {
+        console.log(res);
+        setProducts(res);
+      });
+  }, []);
 
-  
-    return (
+  return (
+    <div>
       <div>
-        <div><Effect /></div>
-        <Categories/>
-            {
-                products.map(function (item, index) {
-                  return (<ProductCard key={index}  product={item} />)
-                })
-            }
-        </div>
-    )
+        <h3>Filter</h3>
+        <button onClick={() => setCate(1)}>Phones</button>
+        <button onClick={() => setCate(2)}>Laptop</button>
+        <button onClick={() => setCate(3)}>Clothes</button>
+        <button onClick={() => setCate(0)}>All</button>
+      </div>
+      <Categories />
+      {products
+        .filter((product) => {
+          if (cate === 0) return true;
+          return product.category === cate;
+        })
+        .map(function (item, index) {
+          return <ProductCard key={index} product={item} />;
+        })}
+    </div>
+  );
 }
 export let a = 10;
 export let b = 20;
