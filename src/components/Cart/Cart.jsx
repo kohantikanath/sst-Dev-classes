@@ -1,14 +1,20 @@
-const Cart = ({ cart }) => {
-  return (
-    <div>
-      {Object.keys(cart).map((key) => (
-        <div key={key}>{cart[key].title}
-        <p>{cart[key].quantity}</p>
+import { useSelector } from "react-redux";
+
+function Cart() {
+    let cart = useSelector((state) => {
+        return state.cart.items;
+    })
+    return (
+        <div>
+            <ul>
+            {
+                Object.values(cart).map((item) => {
+                    return (<li key={item.id}>{item.title}</li>)
+                })
+                }
+            </ul>
         </div>
-        
-      ))}
-    </div>
-  );
-};
+    )
+}
 
 export default Cart;
